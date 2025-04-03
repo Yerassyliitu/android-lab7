@@ -44,5 +44,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    private fun loadNote() {
+        val file = getFileStreamPath(fileName)
+        if (file.exists()) {
+            try {
+                val text = openFileInput(fileName).bufferedReader().use { it.readText() }
+                editNote.setText(text)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this, "Error loading note", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(this, "No saved note found", Toast.LENGTH_SHORT).show()
+        }
+    }
 }
